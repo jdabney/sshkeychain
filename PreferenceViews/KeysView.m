@@ -51,7 +51,7 @@
 		}
 	}
 
-	NSLog(path);
+	NSLog(@"%@", path);
 	
 	/* If the key isn't readable, warn the user. */
 	if([[NSFileManager defaultManager] isReadableFileAtPath:path] == NO)

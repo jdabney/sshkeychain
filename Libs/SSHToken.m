@@ -42,7 +42,7 @@
 	
 	SSHToken *token = [[[self alloc] init] autorelease];
 	
-	[token setToken:[NSString stringWithCString:final]];
+	[token setToken:[NSString stringWithUTF8String:final]];
 	
 	close(fd);
 		

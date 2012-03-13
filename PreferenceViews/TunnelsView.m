@@ -73,6 +73,7 @@
 		[dict setObject:CreateUUID() forKey:@"TunnelUUID"];
 		
 		[tunnels addObject:dict];
+		[dict release];
 		[self updateUI];
 		
 		[self savePreferences];

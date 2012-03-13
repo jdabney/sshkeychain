@@ -24,7 +24,7 @@ int main(int argc, const char *argv[])
 		
 		if(getenv("SSHKeychainToken")) 
 		{
-			sshkeychainToken = [NSString stringWithCString:getenv("SSHKeychainToken")];
+			sshkeychainToken = [NSString stringWithUTF8String:getenv("SSHKeychainToken")];
 		}
 		
 		[UI setProtocolForProxy:@protocol(UI)];
