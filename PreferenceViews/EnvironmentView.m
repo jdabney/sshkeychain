@@ -156,14 +156,14 @@
 	/* If ~/.MacOSX/ doesn't exists, create a directory. */
 	if(![[NSFileManager defaultManager] fileExistsAtPath:dir isDirectory:&isDirectory])
 	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:dir attributes:nil];
+		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil  error:nil];
 	}
 
 	/* If ~/.MacOSX is a file, instead of a directory, remove it and create a directory. */
 	else if(isDirectory == NO)
 	{
 		[[NSFileManager defaultManager] removeFileAtPath:dir handler:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:dir attributes:nil];
+		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil error:nil];
 	}		
 
 	[environment writeToFile:path atomically:YES];

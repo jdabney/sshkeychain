@@ -731,7 +731,7 @@ AgentController *sharedAgentController;
 
 	else if(![[NSFileManager defaultManager] fileExistsAtPath:dir isDirectory:&isDirectory])
 	{
-		if(![[NSFileManager defaultManager] createDirectoryAtPath:dir attributes:attributes])
+		if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:attributes error:nil])
 		{
 			errorString = [NSString stringWithFormat:@"%@ (%@). %@", local(@"Couldn'tCreateSocketDirectory"), dir, local(@"PleaseCreateItManually")];
 

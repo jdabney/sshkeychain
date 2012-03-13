@@ -38,7 +38,7 @@ NSString *local(NSString *theString)
 		return nil;
 	}
 
-	conn = [NSConnection defaultConnection];
+	conn = [[NSConnection new] autorelease];
 	
 	[conn runInNewThread];
 	[conn removeRunLoop:[NSRunLoop currentRunLoop]];
