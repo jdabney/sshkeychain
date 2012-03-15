@@ -24,6 +24,8 @@ int main(int argc, const char *argv[])
 		
 		if(getenv("SSHKeychainToken")) 
 		{
+			NSLog(@"SSHKeychainToken");
+
 			sshkeychainToken = [NSString stringWithUTF8String:getenv("SSHKeychainToken")];
 		}
 		
@@ -52,9 +54,9 @@ int main(int argc, const char *argv[])
 				exit(1);
 			}
 		}
-
+		
 		printf("%s\n", [passphrase UTF8String]);
-
+		
 		[pool release];
 
 		return 0;

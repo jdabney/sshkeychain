@@ -19,7 +19,6 @@ TokenController* sharedTokenController;
 	}
 	
 	tokens = [[NSMutableArray alloc] init];
-	tokenLock = [[NSLock alloc] init];
 	
 	sharedTokenController = self;
 	
@@ -29,14 +28,13 @@ TokenController* sharedTokenController;
 - (void)dealloc
 {
 	[tokens dealloc];
-	[tokenLock dealloc];
 	
 	[super dealloc];
 }
 
 + (TokenController *)sharedController
 {
-	if(!sharedTokenController) {
+if(!sharedTokenController) {
 		return [[TokenController alloc] init];
 	}
 	
@@ -48,7 +46,6 @@ TokenController* sharedTokenController;
 	NSString *token;
 	
 	if(tool == nil) return NO;
-	
 	token = [self generateNewToken];
 	
 	if(token == nil) return NO;
@@ -64,47 +61,35 @@ TokenController* sharedTokenController;
 	
 	token = [SSHToken randomToken];
 	
-	if(token != nil)
+	@synchronized(tokens)
 	{
-		[tokenLock lock];
-		[tokens addObject:token];
-		[tokenLock unlock];
-		
-		return [token getToken];
+		if(token != nil)
+		{
+			[tokens addObject:token];		
+			return [token getToken];
+		}
 	}
-	
 	return nil;
 }
 
 - (bool)checkToken:(NSString *)token
 {
-	NSEnumerator *e;
 	SSHToken *aToken;
+	BOOL check = NO;
 	
-	[tokenLock lock];
-
-	e = [tokens objectEnumerator];
-
-	while (aToken = [e nextObject])
+	@synchronized(tokens)
 	{
-		if ([[aToken getToken] isEqualTo:token])
+		for (aToken in tokens)
 		{
-			if([aToken isValid])
+			if ([[aToken getToken] isEqualTo:token] && [aToken isValid])
 			{
-				[tokens removeObject:aToken];
-				[tokenLock unlock];
-				return YES;
-			}
+				check = YES;
 			
-			[tokens removeObject:aToken];
-		} else if(![aToken isValid]) {
-			[tokens removeObject:aToken];
+			}
 		}
+		[tokens removeAllObjects];	
 	}
-	
-	[tokenLock unlock];
-	
-	return NO;
+	return check;
 }
 
 @end

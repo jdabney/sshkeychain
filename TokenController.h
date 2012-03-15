@@ -5,7 +5,6 @@
 @interface TokenController : NSObject {
 	
 	NSMutableArray *tokens;
-	NSLock *tokenLock;
 }
 
 + (TokenController *)sharedController;
